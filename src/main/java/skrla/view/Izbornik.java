@@ -144,7 +144,7 @@ public class Izbornik extends javax.swing.JFrame {
     }//GEN-LAST:event_miExitActionPerformed
 
     private void jMenuDjelatnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDjelatnikActionPerformed
-        // TODO add your handling code here:
+        new DjelatnikFrame().setVisible(true);
     }//GEN-LAST:event_jMenuDjelatnikActionPerformed
 
     private void jMenuPoslovnaJedinicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPoslovnaJedinicaActionPerformed
@@ -152,11 +152,11 @@ public class Izbornik extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuPoslovnaJedinicaActionPerformed
 
     private void jMenuTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTimActionPerformed
-        // TODO add your handling code here:
+        new TimFrame().setVisible(true);
     }//GEN-LAST:event_jMenuTimActionPerformed
 
     private void jMenuPosaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPosaoActionPerformed
-        // TODO add your handling code here:
+        new PosaoFrame().setVisible(true);
     }//GEN-LAST:event_jMenuPosaoActionPerformed
 
 
