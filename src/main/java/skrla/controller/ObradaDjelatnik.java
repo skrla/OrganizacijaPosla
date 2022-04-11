@@ -24,6 +24,15 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
     public List<Djelatnik> read() {
         return session.createQuery("from Djelatnik").list();
     }
+    
+    public List<Djelatnik> read(String uvjet) {
+        return session.createQuery("from Djelatnik d "
+                + " where concat(d.ime,' ',d.prezime,' ',ifnull(d.oib,'')) "
+                + " like :uvjet order by d.prezime, d.ime")
+                .setParameter("uvjet","%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
+    }
 
     @Override
     protected void kontrolaCreate() throws OrganizacijaException {
@@ -59,7 +68,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
     }
 
     private void kontrolaPrezime() throws OrganizacijaException {
-        if (!entitet.getPrezime().matches("\\p{L}+" + " " + "-")) {
+        if (!entitet.getPrezime().matches("\\p{L}+")) {
             throw new OrganizacijaException("Prezime smije samo sadržavati slova i znak: -!");
         }
     }

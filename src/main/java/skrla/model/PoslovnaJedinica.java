@@ -25,4 +25,9 @@ public class PoslovnaJedinica {
     private String adresa;
     @OneToMany(mappedBy = "poslovnaJedinica")
     private List<Djelatnik> djelatnici;
+    
+    @Override
+    public String toString() {
+        return nazivPoslovneJedinice;
+    }
 }

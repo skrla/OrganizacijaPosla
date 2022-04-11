@@ -31,5 +31,10 @@ public class Tim {
     private List<Djelatnik> djelatnik;
     @OneToMany(mappedBy = "tim")
     private List<Posao> posao;
+    
+    @Override
+    public String toString() {
+        return nazivTima;
+    }
 
 }

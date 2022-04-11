@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -37,5 +38,10 @@ public class Posao {
     @ManyToOne
     private Tim tim;
     private Boolean zavrsen;
+    
+    @Override
+    public String toString() {
+        return lokacijaPosla;
+    }
 
 }

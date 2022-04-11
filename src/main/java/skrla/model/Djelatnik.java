@@ -38,5 +38,11 @@ public class Djelatnik {
     private String email;
     @ManyToOne
     private Tim tim;
+    
+    
+    @Override
+    public String toString() {
+        return ime + " " + prezime;
+    }
 
 }

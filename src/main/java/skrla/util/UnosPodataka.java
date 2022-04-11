@@ -41,7 +41,7 @@ public class UnosPodataka {
     private static List<Djelatnik> generirajDjelatnike(Faker faker, Session session, boolean b, List<PoslovnaJedinica> pj, List<Tim> t) {
         List<Djelatnik> djelatnici = new ArrayList();
         Djelatnik d;
-        for (int i = 0; i < 1234; i++) {
+        for (int i = 0; i < 124; i++) {
             int m = (int)(Math.random() * (2000 - 1000) + 100) % 100;
             d = new Djelatnik();
             d.setIme(faker.name().firstName());
@@ -84,7 +84,7 @@ public class UnosPodataka {
         for(int i = 0; i < 2; i++) {
             pj = new PoslovnaJedinica();
             pj.setNazivPoslovneJedinice(faker.esports().team());
-            pj.setAdresa(faker.address().fullAddress());
+            pj.setAdresa(faker.address().streetAddress());
             session.save(pj);
             poslovnaJedinica.add(pj);
             System.out.println("Kreirana poslovna jedinica: " + pj.getNazivPoslovneJedinice() + " " + pj.getAdresa());
@@ -101,6 +101,7 @@ public class UnosPodataka {
             p.setOpisPosla(faker.chuckNorris().fact());
             p.setCijenaPosla(new BigDecimal(Math.random() * (100000 - 5000) + 5000));
             p.setTim(t.get(m));
+            p.setLokacijaPosla(faker.address().fullAddress());
             session.save(p);
             poslovi.add(p);
             System.out.println("Kreiran posao: " + p.getOpisPosla());

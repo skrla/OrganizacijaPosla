@@ -4,10 +4,27 @@
  */
 package skrla.util;
 
+import java.text.Collator;
+import java.util.Comparator;
+import java.util.Locale;
+import skrla.model.Djelatnik;
+
 /**
  *
  * @author skrla
  */
-public class ViewUtil {
+public class ViewUtil implements Comparator<Djelatnik> {
+
+    private Collator hr;
+
+    public ViewUtil() {
+        hr = Collator.getInstance(new Locale("hr", "HR")); //Your locale here
+        hr.setStrength(Collator.PRIMARY);
+    }
+
+    @Override
+    public int compare(Djelatnik o1, Djelatnik o2) {
+        return hr.compare(o1.getPrezime(), o2.getPrezime());
+    }
     
 }
