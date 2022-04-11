@@ -237,7 +237,6 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
 
     private void btnPrebaciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrebaciActionPerformed
         DefaultListModel<Djelatnik> m = (DefaultListModel<Djelatnik>)lstDjelatnik.getModel();
-        DefaultListModel<Djelatnik> m1 = (DefaultListModel<Djelatnik>)lstDjelatnik1.getModel()
         for(Djelatnik d : lstDjelatnik.getSelectedValuesList()){
             m.removeElement(d);
             for(Djelatnik md : obradaPoslovnaJedinica.getEntitet().getDjelatnici()){

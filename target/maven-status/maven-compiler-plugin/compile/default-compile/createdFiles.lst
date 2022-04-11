@@ -4,6 +4,7 @@ skrla\view\PromjenaDjelatnikFrame$4.class
 skrla\model\Djelatnik.class
 skrla\util\UnosPodataka.class
 skrla\view\DjelatnikFrame$1.class
+skrla\view\PoslovnaJedinicaFrame$1.class
 skrla\view\DjelatnikFrame$9.class
 skrla\view\PromjenaDjelatnikFrame$1.class
 skrla\view\TimFrame$2.class
@@ -11,6 +12,7 @@ skrla\view\Izbornik.class
 skrla\controller\Obrada.class
 skrla\controller\ObradaTim.class
 skrla\view\PromjenaDjelatnikFrame.class
+skrla\view\PoslovnaJedinicaFrame$3.class
 skrla\controller\ObradaPosao.class
 skrla\view\DjelatnikFrame$2.class
 skrla\view\PromjenaDjelatnikFrame$2.class
@@ -41,8 +43,10 @@ skrla\model\PoslovnaJedinica.class
 skrla\view\Izbornik$4.class
 skrla\view\SplashScreen$Ucitanje.class
 skrla\view\PromjenaDjelatnikFrame$7.class
+skrla\view\PoslovnaJedinicaFrame$2.class
 skrla\controller\ObradaPoslovnaJedinica.class
 skrla\start\Start.class
 skrla\view\DjelatnikFrame$3.class
 skrla\util\OibValidation.class
 skrla\view\PosaoFrame.class
+skrla\view\PoslovnaJedinicaFrame.class
