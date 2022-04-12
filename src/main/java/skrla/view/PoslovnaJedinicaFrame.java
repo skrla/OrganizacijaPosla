@@ -4,6 +4,7 @@
  */
 package skrla.view;
 
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -12,6 +13,7 @@ import skrla.controller.ObradaPoslovnaJedinica;
 import skrla.controller.ObradaTim;
 import skrla.model.Djelatnik;
 import skrla.model.PoslovnaJedinica;
+import skrla.util.ViewUtil;
 
 /**
  *
@@ -24,7 +26,6 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     /**
      * Creates new form PoslovnaJedinicaFrame
      */
-    private ObradaPoslovnaJedinica opj;
 
     public PoslovnaJedinicaFrame() {
         initComponents();
@@ -35,43 +36,72 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         lstDjelatnik.setCellRenderer(new PrikazDjelatnik());
     }
 
+    private void ucitajDjelatnikeNaPoslovnojJedinici(PoslovnaJedinica odabrana) {
+        DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatniciNaPoslovnojJednici;
+        djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
+        
+        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+
+        for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {
+            if(djelatnik.getPoslovnaJedinica() == odabrana) {
+                m.addElement(djelatnik);
+            }
+        }
+        lstDjelatnik.setModel(m);
+    }
+        private void ucitajDjelatnikeNaPoslovnojJedinici1(PoslovnaJedinica odabrana) {
+        DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatniciNaPoslovnojJednici;
+        djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
+        
+        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+
+        for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {
+            if(djelatnik.getPoslovnaJedinica() == odabrana) {
+                m.addElement(djelatnik);
+            }
+        }
+        lstDjelatnik1.setModel(m);
+    }
+
     private void ucitajPoslovneJedinice() {
         DefaultComboBoxModel<PoslovnaJedinica> ms = new DefaultComboBoxModel<>();
         PoslovnaJedinica poslovnaJedinica = new PoslovnaJedinica();
         poslovnaJedinica.setSifraPoslovneJedinice(Integer.valueOf(0));
         poslovnaJedinica.setNazivPoslovneJedinice("Nije odabrano");
-        ms.addElement(poslovnaJedinica); 
-        if(jComboPoslovnaJedinica1 != null || jComboPoslovnaJedinica1.getSelectedIndex() != 0) {
-           new ObradaPoslovnaJedinica().read().forEach(s -> {
-               if(!s.equals(jComboPoslovnaJedinica1.getSelectedItem())) {
-                  ms.addElement(s);
-               }
-           });
+        ms.addElement(poslovnaJedinica);
+        if (jComboPoslovnaJedinica1 != null || jComboPoslovnaJedinica1.getSelectedIndex() != 0) {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                if (!s.equals(jComboPoslovnaJedinica1.getSelectedItem())) {
+                    ms.addElement(s);
+                }
+            });
         } else {
-        new ObradaPoslovnaJedinica().read().forEach(s -> {
-            ms.addElement(s);
-        });
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                ms.addElement(s);
+            });
         }
 
         jComboPoslovnaJedinica.setModel(ms);
     }
-    
+
     private void ucitajPoslovneJedinice1() {
         DefaultComboBoxModel<PoslovnaJedinica> ms = new DefaultComboBoxModel<>();
         PoslovnaJedinica poslovnaJedinica = new PoslovnaJedinica();
         poslovnaJedinica.setSifraPoslovneJedinice(Integer.valueOf(0));
         poslovnaJedinica.setNazivPoslovneJedinice("Nije odabrano");
-        ms.addElement(poslovnaJedinica); 
-        if(jComboPoslovnaJedinica != null || jComboPoslovnaJedinica.getSelectedIndex() != 0) {
-           new ObradaPoslovnaJedinica().read().forEach(s -> {
-               if(!s.equals(jComboPoslovnaJedinica.getSelectedItem())) {
-                  ms.addElement(s);
-               }
-           });
+        ms.addElement(poslovnaJedinica);
+        if (jComboPoslovnaJedinica != null || jComboPoslovnaJedinica.getSelectedIndex() != 0) {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                if (!s.equals(jComboPoslovnaJedinica.getSelectedItem())) {
+                    ms.addElement(s);
+                }
+            });
         } else {
-        new ObradaPoslovnaJedinica().read().forEach(s -> {
-            ms.addElement(s);
-        });
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                ms.addElement(s);
+            });
         }
 
         jComboPoslovnaJedinica1.setModel(ms);
@@ -228,24 +258,25 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboPoslovnaJedinicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPoslovnaJedinicaActionPerformed
-
+        ucitajDjelatnikeNaPoslovnojJedinici((PoslovnaJedinica)jComboPoslovnaJedinica.getSelectedItem());
     }//GEN-LAST:event_jComboPoslovnaJedinicaActionPerformed
 
     private void jComboPoslovnaJedinica1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPoslovnaJedinica1ActionPerformed
-
+        ucitajDjelatnikeNaPoslovnojJedinici1((PoslovnaJedinica)jComboPoslovnaJedinica1.getSelectedItem());
     }//GEN-LAST:event_jComboPoslovnaJedinica1ActionPerformed
 
     private void btnPrebaciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrebaciActionPerformed
-        DefaultListModel<Djelatnik> m = (DefaultListModel<Djelatnik>)lstDjelatnik.getModel();
-        for(Djelatnik d : lstDjelatnik.getSelectedValuesList()){
+        DefaultListModel<Djelatnik> m = (DefaultListModel<Djelatnik>) lstDjelatnik.getModel();
+        DefaultListModel<Djelatnik> m1 = (DefaultListModel<Djelatnik>) lstDjelatnik1.getModel();
+        for (Djelatnik d : lstDjelatnik.getSelectedValuesList()) {
             m.removeElement(d);
-            for(Djelatnik md : obradaPoslovnaJedinica.getEntitet().getDjelatnici()){
-                if(md.getSifraDjelatnika() == d.getSifraDjelatnika()){
+            for (Djelatnik md : obradaPoslovnaJedinica.getEntitet().getDjelatnici()) {
+                if (md.getSifraDjelatnika() == d.getSifraDjelatnika()) {
                     obradaPoslovnaJedinica.getEntitet().getDjelatnici().remove(md);
                     break;
                 }
             }
-        }        
+        }
         lstDjelatnik.repaint();
     }//GEN-LAST:event_btnPrebaciActionPerformed
 
@@ -265,4 +296,5 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     private javax.swing.JList<Djelatnik> lstDjelatnik;
     private javax.swing.JList<Djelatnik> lstDjelatnik1;
     // End of variables declaration//GEN-END:variables
+
 }

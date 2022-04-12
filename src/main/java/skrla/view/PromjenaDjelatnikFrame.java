@@ -64,6 +64,7 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
 
     private void kreirajNovogDjelatnika() {
         try {
+            obradaDjelatnik.getEntitet().setAktivan(true);
             postaviPodatke(obradaDjelatnik.getEntitet());
             obradaDjelatnik.create();
         } catch (OrganizacijaException ex) {
@@ -78,7 +79,9 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
         e.setOib(txtOIB.getText());
         e.setEmail(txtEmail.getText());
         e.setAdresaStanovanja(txtAdresa.getText());
-        e.setDatumRodenja(Date.from(dpDatumRodenja.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        if (dpDatumRodenja.getDate() != null) {
+            e.setDatumRodenja(Date.from(dpDatumRodenja.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        }
         e.setIBAN(txtIban.getText());
     }
 
