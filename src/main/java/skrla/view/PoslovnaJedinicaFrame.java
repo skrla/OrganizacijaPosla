@@ -4,13 +4,18 @@
  */
 package skrla.view;
 
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import skrla.controller.ObradaDjelatnik;
 import skrla.controller.ObradaPoslovnaJedinica;
 import skrla.controller.ObradaTim;
+import skrla.model.Djelatnik;
 import skrla.model.PoslovnaJedinica;
+import skrla.util.OrganizacijaException;
+import skrla.util.ViewUtil;
 
 /**
  *
@@ -20,23 +25,89 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
 
     private ObradaPoslovnaJedinica obradaPoslovnaJedinica;
     private ObradaDjelatnik obradaDjelatnik;
-    private ObradaTim obradaTim;
+
     /**
      * Creates new form PoslovnaJedinicaFrame
      */
-    private ObradaPoslovnaJedinica opj;
-    
     public PoslovnaJedinicaFrame() {
         initComponents();
+        obradaPoslovnaJedinica = new ObradaPoslovnaJedinica();
+        obradaDjelatnik = new ObradaDjelatnik();
+        ucitajPoslovneJedinice();
+        ucitajPoslovneJedinice1();
+        lstDjelatnik.setCellRenderer(new PrikazDjelatnik());
+    }
+
+    private void ucitajDjelatnikeNaPoslovnojJedinici(PoslovnaJedinica odabrana) {
+        DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatniciNaPoslovnojJednici;
+        djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
+
+        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+
+        for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {
+            if (djelatnik.getPoslovnaJedinica() == odabrana) {
+                m.addElement(djelatnik);
+            }
+        }
+        lstDjelatnik.setModel(m);
+    }
+
+    private void ucitajDjelatnikeNaPoslovnojJedinici1(PoslovnaJedinica odabrana) {
+        DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatniciNaPoslovnojJednici;
+        djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
+
+        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+
+        for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {
+            if (djelatnik.getPoslovnaJedinica() == odabrana) {
+                m.addElement(djelatnik);
+            }
+        }
+        lstDjelatnik1.setModel(m);
+    }
+
+    private void ucitajPoslovneJedinice() {
         DefaultComboBoxModel<PoslovnaJedinica> ms = new DefaultComboBoxModel<>();
         PoslovnaJedinica poslovnaJedinica = new PoslovnaJedinica();
         poslovnaJedinica.setSifraPoslovneJedinice(Integer.valueOf(0));
         poslovnaJedinica.setNazivPoslovneJedinice("Nije odabrano");
         ms.addElement(poslovnaJedinica);
-        new ObradaPoslovnaJedinica().read().forEach(s -> {
-            ms.addElement(s);
-        });
+        if (jComboPoslovnaJedinica1 != null || jComboPoslovnaJedinica1.getSelectedIndex() != 0) {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                if (!s.equals(jComboPoslovnaJedinica1.getSelectedItem())) {
+                    ms.addElement(s);
+                }
+            });
+        } else {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                ms.addElement(s);
+            });
+        }
+
         jComboPoslovnaJedinica.setModel(ms);
+    }
+
+    private void ucitajPoslovneJedinice1() {
+        DefaultComboBoxModel<PoslovnaJedinica> ms = new DefaultComboBoxModel<>();
+        PoslovnaJedinica poslovnaJedinica = new PoslovnaJedinica();
+        poslovnaJedinica.setSifraPoslovneJedinice(Integer.valueOf(0));
+        poslovnaJedinica.setNazivPoslovneJedinice("Nije odabrano");
+        ms.addElement(poslovnaJedinica);
+        if (jComboPoslovnaJedinica != null || jComboPoslovnaJedinica.getSelectedIndex() != 0) {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                if (!s.equals(jComboPoslovnaJedinica.getSelectedItem())) {
+                    ms.addElement(s);
+                }
+            });
+        } else {
+            new ObradaPoslovnaJedinica().read().forEach(s -> {
+                ms.addElement(s);
+            });
+        }
+
+        jComboPoslovnaJedinica1.setModel(ms);
     }
 
     /**
@@ -51,8 +122,17 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jComboPoslovnaJedinica = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jListTimž = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListDjelatnik = new javax.swing.JScrollPane();
+        lstDjelatnik = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
+        jComboPoslovnaJedinica1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jListDjelatnik1 = new javax.swing.JScrollPane();
+        lstDjelatnik1 = new javax.swing.JList<>();
+        btnPrebaci = new javax.swing.JButton();
+        btnDodaj = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -64,7 +144,7 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Poslovna jedinica:");
 
-        jListTimž.setViewportView(jList1);
+        jListDjelatnik.setViewportView(lstDjelatnik);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,12 +152,13 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jListTimž)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jListDjelatnik)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,9 +169,63 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jListTimž, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                .addComponent(jListDjelatnik, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jComboPoslovnaJedinica1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboPoslovnaJedinica1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Poslovna jedinica:");
+
+        jListDjelatnik1.setViewportView(lstDjelatnik1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jListDjelatnik1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboPoslovnaJedinica1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboPoslovnaJedinica1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jListDjelatnik1))
+        );
+
+        btnPrebaci.setText(">>");
+        btnPrebaci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrebaciActionPerformed(evt);
+            }
+        });
+
+        btnDodaj.setText("<<");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Dodaj djelatnike:");
+
+        jLabel4.setText("Prebaci djelatnike:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,11 +234,31 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(417, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPrebaci, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrebaci)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDodaj)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,14 +266,69 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboPoslovnaJedinicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPoslovnaJedinicaActionPerformed
-        // TODO add your handling code here:
+        ucitajDjelatnikeNaPoslovnojJedinici((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
     }//GEN-LAST:event_jComboPoslovnaJedinicaActionPerformed
 
+    private void jComboPoslovnaJedinica1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPoslovnaJedinica1ActionPerformed
+        ucitajDjelatnikeNaPoslovnojJedinici1((PoslovnaJedinica) jComboPoslovnaJedinica1.getSelectedItem());
+    }//GEN-LAST:event_jComboPoslovnaJedinica1ActionPerformed
+
+    private void btnPrebaciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrebaciActionPerformed
+        DefaultListModel<Djelatnik> m = (DefaultListModel<Djelatnik>) lstDjelatnik.getModel();
+        obradaPoslovnaJedinica.setEntitet((PoslovnaJedinica) jComboPoslovnaJedinica1.getSelectedItem());
+        var e = obradaPoslovnaJedinica.getEntitet();
+        for (Djelatnik d : lstDjelatnik.getSelectedValuesList()) {
+            m.removeElement(d);
+            d.setPoslovnaJedinica(e);
+            obradaDjelatnik.setEntitet(d);
+            try {
+                obradaDjelatnik.update();
+
+            } catch (OrganizacijaException ex) {
+                JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+            }
+
+        }
+        ucitajDjelatnikeNaPoslovnojJedinici((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
+        ucitajDjelatnikeNaPoslovnojJedinici1((PoslovnaJedinica) jComboPoslovnaJedinica1.getSelectedItem());
+    }//GEN-LAST:event_btnPrebaciActionPerformed
+
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        DefaultListModel<Djelatnik> m = (DefaultListModel<Djelatnik>) lstDjelatnik1.getModel();
+        obradaPoslovnaJedinica.setEntitet((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
+        var e = obradaPoslovnaJedinica.getEntitet();
+        for (Djelatnik d : lstDjelatnik1.getSelectedValuesList()) {
+            m.removeElement(d);
+            d.setPoslovnaJedinica(e);
+            obradaDjelatnik.setEntitet(d);
+            try {
+                obradaDjelatnik.update();
+
+            } catch (OrganizacijaException ex) {
+                JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+            }
+        }
+
+        ucitajDjelatnikeNaPoslovnojJedinici((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
+        ucitajDjelatnikeNaPoslovnojJedinici1((PoslovnaJedinica) jComboPoslovnaJedinica1.getSelectedItem());
+
+    }//GEN-LAST:event_btnDodajActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDodaj;
+    private javax.swing.JButton btnPrebaci;
     private javax.swing.JComboBox<PoslovnaJedinica> jComboPoslovnaJedinica;
+    private javax.swing.JComboBox<PoslovnaJedinica> jComboPoslovnaJedinica1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jListTimž;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jListDjelatnik;
+    private javax.swing.JScrollPane jListDjelatnik1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JList<Djelatnik> lstDjelatnik;
+    private javax.swing.JList<Djelatnik> lstDjelatnik1;
     // End of variables declaration//GEN-END:variables
+
 }

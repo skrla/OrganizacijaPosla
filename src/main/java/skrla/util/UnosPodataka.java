@@ -42,7 +42,7 @@ public class UnosPodataka {
         List<Djelatnik> djelatnici = new ArrayList();
         Djelatnik d;
         for (int i = 0; i < 124; i++) {
-            int m = (int)(Math.random() * (2000 - 1000) + 100) % 100;
+            int m = (int)(Math.random() * (30 - 0) + 30) % 30;
             d = new Djelatnik();
             d.setIme(faker.name().firstName());
             d.setPrezime(faker.name().lastName());
@@ -53,10 +53,10 @@ public class UnosPodataka {
                 d.setOib(OibValidation.generirajOib());
             }
             
-            d.setIBAN(faker.pokemon().name());
             d.setAdresaStanovanja(faker.pokemon().location());
-            d.setPoslovnaJedinica(pj.get(Math.random() < 0.5 ? 0 : 1));
+            d.setPoslovnaJedinica(pj.get((int)(Math.random() * (5 - 0) + 5) % 5));
             d.setTim(t.get(m));
+            d.setAktivan(true);
             session.save(d);
             djelatnici.add(d);
             System.out.println("Krierao djelatnika: " + d.getIme() + " " + d.getPrezime());
@@ -68,9 +68,9 @@ public class UnosPodataka {
         List<Tim> tim = new ArrayList();
         Tim t;
         
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 30; i++) {
             t = new Tim();
-            t.setNazivTima(faker.funnyName().name());
+            t.setNazivTima(faker.dog().breed());
             session.save(t);
             tim.add(t);
             System.out.println("Kreiran tim: " + t.getNazivTima() );
@@ -81,9 +81,9 @@ public class UnosPodataka {
     private static List<PoslovnaJedinica> generirajPoslovneJedinice(Faker faker, Session session) {
         List<PoslovnaJedinica> poslovnaJedinica = new ArrayList();
         PoslovnaJedinica pj;
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 5; i++) {
             pj = new PoslovnaJedinica();
-            pj.setNazivPoslovneJedinice(faker.esports().team());
+            pj.setNazivPoslovneJedinice(faker.company().name());
             pj.setAdresa(faker.address().streetAddress());
             session.save(pj);
             poslovnaJedinica.add(pj);
@@ -97,11 +97,11 @@ public class UnosPodataka {
         Posao p;
         for(int i = 0; i < 50; i++) {
             p = new Posao();
-            int m = (int)(Math.random() * (2000 - 1000) + 100) % 100;
+            int m = (int)(Math.random() * (30 - 0) + 30) % 30;
             p.setOpisPosla(faker.chuckNorris().fact());
             p.setCijenaPosla(new BigDecimal(Math.random() * (100000 - 5000) + 5000));
             p.setTim(t.get(m));
-            p.setLokacijaPosla(faker.address().fullAddress());
+            p.setRadniNalog(faker.code().imei());
             session.save(p);
             poslovi.add(p);
             System.out.println("Kreiran posao: " + p.getOpisPosla());

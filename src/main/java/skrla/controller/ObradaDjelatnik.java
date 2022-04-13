@@ -22,6 +22,10 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
 
     @Override
     public List<Djelatnik> read() {
+        return session.createQuery("from Djelatnik d where d.aktivan is true").list();
+    }
+    
+    public List<Djelatnik> readSveDjelatnike() {
         return session.createQuery("from Djelatnik").list();
     }
     
@@ -39,9 +43,9 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
         kontrolaOib();
         kontrolaIme();
         kontrolaPrezime();
-        kontrolaIBAN();
+//        kontrolaIBAN();
         kontrolaAdresa();
-        kontrolaDatumRodenja();
+//        kontrolaDatumRodenja();
         kontrolaEmail();
     }
 
@@ -52,7 +56,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
 
     @Override
     protected void kontrolaDelete() throws OrganizacijaException {
-    
+        
     }
 
     private void kontrolaOib() throws OrganizacijaException {
