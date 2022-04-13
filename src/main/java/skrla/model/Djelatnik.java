@@ -38,7 +38,6 @@ public class Djelatnik {
     private String email;
     @ManyToOne
     private Tim tim;
-    private boolean aktivan;
     
     
     @Override

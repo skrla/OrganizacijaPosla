@@ -38,16 +38,7 @@ public class TimFrame extends javax.swing.JFrame {
         for (Tim s : entiteti) {
             m.addElement(s);
         }
-        jListTim.setModel(m);
-    }
-    
-    private void ucitajTim(String naziv){
-        DefaultListModel<Tim> m = new DefaultListModel<>();
-        List<Tim> entiteti = obradaTim.read(naziv);
-
-        for (Tim s : entiteti) {
-            m.addElement(s);
-        }
+        // implementirati ćemo custom renderer https://www.codejava.net/java-se/swing/jlist-custom-renderer-example
         jListTim.setModel(m);
     }
 
@@ -73,11 +64,6 @@ public class TimFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBtnTrazi.setText("Traži");
-        jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnTraziActionPerformed(evt);
-            }
-        });
 
         jListTim.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -117,9 +103,9 @@ public class TimFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnTrazi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnPromjenaTim)
                 .addContainerGap())
         );
@@ -178,14 +164,6 @@ public class TimFrame extends javax.swing.JFrame {
         }
         jListDjelatnik.setModel(m);
     }//GEN-LAST:event_jListTimValueChanged
-
-    private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
-        if(jTxtTim.getText().trim().isEmpty()) {
-            ucitajTim();
-        } else {
-            ucitajTim(jTxtTim.getText());
-        }
-    }//GEN-LAST:event_jBtnTraziActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

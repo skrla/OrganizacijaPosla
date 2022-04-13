@@ -57,7 +57,6 @@ public class UnosPodataka {
             d.setAdresaStanovanja(faker.pokemon().location());
             d.setPoslovnaJedinica(pj.get(Math.random() < 0.5 ? 0 : 1));
             d.setTim(t.get(m));
-            d.setAktivan(true);
             session.save(d);
             djelatnici.add(d);
             System.out.println("Krierao djelatnika: " + d.getIme() + " " + d.getPrezime());
