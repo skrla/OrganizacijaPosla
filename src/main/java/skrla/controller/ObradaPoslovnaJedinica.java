@@ -46,13 +46,13 @@ public class ObradaPoslovnaJedinica extends Obrada<PoslovnaJedinica>{
     }
     
     private void kontrolaNaziv() throws OrganizacijaException {
-        if(entitet.getNazivPoslovneJedinice() != null || entitet.getNazivPoslovneJedinice().trim().isEmpty()) {
+        if(entitet.getNazivPoslovneJedinice() == null || entitet.getNazivPoslovneJedinice().trim().isEmpty()) {
             throw new OrganizacijaException("Morate unjeti naziv poslovne jedinice");
         }
     }
     
     private void kontrolaAdresa() throws OrganizacijaException {
-        if(entitet.getAdresa() != null || entitet.getAdresa().trim().isEmpty()) {
+        if(entitet.getAdresa() == null || entitet.getAdresa().trim().isEmpty()) {
             throw new OrganizacijaException("Morate unjeti adresu poslovne jedinice");
         }
     }

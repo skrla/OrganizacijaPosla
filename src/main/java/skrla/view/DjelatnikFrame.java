@@ -313,11 +313,13 @@ public class DjelatnikFrame extends javax.swing.JFrame {
         }
 
         try {
-            obradaDjelatnik.delete();
+            obradaDjelatnik.getEntitet().setAktivan(false);
+            obradaDjelatnik.update();
             ucitajDjelatnike();
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
+        lstDjelatnik.repaint();
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void lstDjelatnikValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDjelatnikValueChanged

@@ -18,18 +18,23 @@ import skrla.util.OrganizacijaException;
  *
  * @author skrla
  */
-public class ObradaDjelatnik extends Obrada<Djelatnik>{
+public class ObradaDjelatnik extends Obrada<Djelatnik> {
 
     @Override
     public List<Djelatnik> read() {
+        return session.createQuery("from Djelatnik d where d.aktivan is true").list();
+    }
+
+    public List<Djelatnik> readSveDjelatnike() {
         return session.createQuery("from Djelatnik").list();
     }
-    
+
     public List<Djelatnik> read(String uvjet) {
         return session.createQuery("from Djelatnik d "
                 + " where concat(d.ime,' ',d.prezime,' ',ifnull(d.oib,'')) "
-                + " like :uvjet order by d.prezime, d.ime")
-                .setParameter("uvjet","%" + uvjet + "%")
+                + " like :uvjet and d.aktivan is true"
+                + "  order by d.prezime, d.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
                 .setMaxResults(50)
                 .list();
     }
@@ -39,9 +44,9 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
         kontrolaOib();
         kontrolaIme();
         kontrolaPrezime();
-        kontrolaIBAN();
+//        kontrolaIBAN();
         kontrolaAdresa();
-        kontrolaDatumRodenja();
+//        kontrolaDatumRodenja();
         kontrolaEmail();
     }
 
@@ -52,17 +57,17 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
 
     @Override
     protected void kontrolaDelete() throws OrganizacijaException {
-    
+
     }
 
     private void kontrolaOib() throws OrganizacijaException {
-        if(!OibValidation.checkOIB(entitet.getOib())) {
+        if (!OibValidation.checkOIB(entitet.getOib())) {
             throw new OrganizacijaException("OIB nije ispravan!");
         }
     }
 
     private void kontrolaIme() throws OrganizacijaException {
-        if(!entitet.getIme().matches("\\p{L}+")) {
+        if (!entitet.getIme().matches("\\p{L}+")) {
             throw new OrganizacijaException("Ime mora sadržavati samo slova!");
         }
     }
@@ -88,7 +93,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
     }
 
     private void kontrolaAdresa() throws OrganizacijaException {
-        if(entitet.getAdresaStanovanja() == null || entitet.getAdresaStanovanja().trim().isEmpty()) {
+        if (entitet.getAdresaStanovanja() == null || entitet.getAdresaStanovanja().trim().isEmpty()) {
             throw new OrganizacijaException("Niste unjeli adresu stanovanja!");
         }
     }
@@ -97,9 +102,9 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
         if (entitet.getDatumRodenja() == null) {
             throw new OrganizacijaException("Morate unjeti datum rođenja!");
         }
- /*       LocalDate current = LocalDate.now();
+        /*       LocalDate current = LocalDate.now();
         Period p = Period.between(entitet.getDatumRodenja(), current);
- */       
+         */
     }
 
     private void kontrolaEmail() throws OrganizacijaException {
@@ -113,5 +118,5 @@ public class ObradaDjelatnik extends Obrada<Djelatnik>{
             throw new OrganizacijaException("Email nije formalno ispravan");
         }
     }
-    
+
 }

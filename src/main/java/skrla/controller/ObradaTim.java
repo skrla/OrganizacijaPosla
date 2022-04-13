@@ -19,7 +19,15 @@ public class ObradaTim extends Obrada<Tim>{
 
     @Override
     public List<Tim> read() {
-        return session.createQuery("from Tim").list();
+        return session.createQuery("from Tim t order by t.nazivTima").list();
+    }
+    
+    public List<Tim> read(String naziv) {
+        return session.createQuery("from Tim t where"
+                + " t.nazivTima like :naziv"
+                + " order by t.nazivTima")
+                .setParameter("naziv", naziv + "%")
+                .list();
     }
 
     @Override

@@ -4,7 +4,6 @@ skrla\view\PromjenaDjelatnikFrame$4.class
 skrla\model\Djelatnik.class
 skrla\util\UnosPodataka.class
 skrla\view\DjelatnikFrame$1.class
-skrla\view\PoslovnaJedinicaFrame$1.class
 skrla\view\DjelatnikFrame$9.class
 skrla\view\PromjenaDjelatnikFrame$1.class
 skrla\view\TimFrame$2.class
@@ -47,4 +46,3 @@ skrla\start\Start.class
 skrla\view\DjelatnikFrame$3.class
 skrla\util\OibValidation.class
 skrla\view\PosaoFrame.class
-skrla\view\PoslovnaJedinicaFrame.class
