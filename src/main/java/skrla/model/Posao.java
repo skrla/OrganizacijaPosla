@@ -31,7 +31,7 @@ public class Posao {
     private int sifraPosla;
     private String opisPosla;
     private BigDecimal cijenaPosla;
-    private String radniNalog;
+    private String lokacijaPosla;
     private Date pocetakPosla;
     private Date krajPosla;
     private String napomena;
@@ -41,7 +41,7 @@ public class Posao {
     
     @Override
     public String toString() {
-        return radniNalog;
+        return lokacijaPosla;
     }
 
 }

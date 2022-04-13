@@ -313,8 +313,7 @@ public class DjelatnikFrame extends javax.swing.JFrame {
         }
 
         try {
-            obradaDjelatnik.getEntitet().setAktivan(false);
-            obradaDjelatnik.update();
+            obradaDjelatnik.delete();
             ucitajDjelatnike();
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
