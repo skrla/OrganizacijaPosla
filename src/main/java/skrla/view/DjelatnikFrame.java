@@ -299,7 +299,7 @@ public class DjelatnikFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajDjelatnikaActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (obradaDjelatnik == null) {
+        if (obradaDjelatnik.getEntitet() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }

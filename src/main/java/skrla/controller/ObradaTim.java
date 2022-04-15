@@ -44,10 +44,10 @@ public class ObradaTim extends Obrada<Tim>{
     protected void kontrolaDelete() throws OrganizacijaException {
         if(entitet.getDjelatnik() != null && entitet.getDjelatnik().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append("/n");
+            sb.append("\n ");
             for(Djelatnik d: entitet.getDjelatnik()) {
                 sb.append(d.getIme() + " " + d.getPrezime());
-                sb.append("/n");
+                sb.append(" \n");
             }
             throw new OrganizacijaException("Ne možete obrisati tim dok joj pripadaju djelatnici:" + sb.toString());
         }
@@ -67,7 +67,7 @@ public class ObradaTim extends Obrada<Tim>{
     }
     
     private void kontrolaNaziv() throws OrganizacijaException {
-        if(entitet.getNazivTima() != null || entitet.getNazivTima().trim().isEmpty()) {
+        if(entitet.getNazivTima() == null || entitet.getNazivTima().trim().isEmpty()) {
             throw new OrganizacijaException("Morate unjeti naziv tima");
         }
     }

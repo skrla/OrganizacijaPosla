@@ -6,11 +6,18 @@ package skrla.view;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import org.assertj.core.util.DateUtil;
 import skrla.controller.ObradaDjelatnik;
 import skrla.controller.ObradaTim;
 import skrla.model.Djelatnik;
+import skrla.model.Posao;
+import skrla.model.PoslovnaJedinica;
 import skrla.model.Tim;
+import skrla.util.OrganizacijaException;
 import skrla.util.ViewUtil;
 
 /**
@@ -21,6 +28,7 @@ public class TimFrame extends javax.swing.JFrame {
 
     private ObradaTim obradaTim;
     private ObradaDjelatnik obradaDjelatnik;
+
     /**
      * Creates new form TimFrame
      */
@@ -30,7 +38,7 @@ public class TimFrame extends javax.swing.JFrame {
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajTim();
     }
-    
+
     private void ucitajTim() {
         DefaultListModel<Tim> m = new DefaultListModel<>();
         List<Tim> entiteti = obradaTim.read();
@@ -40,8 +48,8 @@ public class TimFrame extends javax.swing.JFrame {
         }
         jListTim.setModel(m);
     }
-    
-    private void ucitajTim(String naziv){
+
+    private void ucitajTim(String naziv) {
         DefaultListModel<Tim> m = new DefaultListModel<>();
         List<Tim> entiteti = obradaTim.read(naziv);
 
@@ -61,21 +69,39 @@ public class TimFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jBtnTrazi = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnKreirajTim = new javax.swing.JButton();
+        jTxtTim = new javax.swing.JTextField();
+        btnObrisiTim = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTim = new javax.swing.JList<>();
-        jTxtTim = new javax.swing.JTextField();
+        jBtnTrazi = new javax.swing.JButton();
         jBtnPromjenaTim = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtNapomena = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnPromjenaDjelatnikaNaTimu = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListDjelatnik = new javax.swing.JList<>();
+        cbRadniNalog = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        btnPosaljiPodatke = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jBtnTrazi.setText("Traži");
-        jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
+        btnKreirajTim.setText("Kreiraj tim");
+        btnKreirajTim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnTraziActionPerformed(evt);
+                btnKreirajTimActionPerformed(evt);
+            }
+        });
+
+        btnObrisiTim.setText("Obriši tim");
+        btnObrisiTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiTimActionPerformed(evt);
             }
         });
 
@@ -86,6 +112,13 @@ public class TimFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jListTim);
 
+        jBtnTrazi.setText("Traži");
+        jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnTraziActionPerformed(evt);
+            }
+        });
+
         jBtnPromjenaTim.setText("Promjeni podatke tima");
         jBtnPromjenaTim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,40 +126,98 @@ public class TimFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBtnPromjenaTim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTxtTim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnTrazi))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnKreirajTim, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnObrisiTim, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnTrazi))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnObrisiTim)
+                    .addComponent(btnKreirajTim))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnPromjenaTim)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTxtTim)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnTrazi))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBtnPromjenaTim, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnTrazi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jBtnPromjenaTim)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jLabel2.setText("Radni nalog:");
+
+        txtNapomena.setColumns(20);
+        txtNapomena.setLineWrap(true);
+        txtNapomena.setRows(5);
+        txtNapomena.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtNapomena);
 
         jLabel1.setText("Djelatnici na timu:");
 
+        btnPromjenaDjelatnikaNaTimu.setText("Promjeni djelatnike na timu");
+
         jScrollPane2.setViewportView(jListDjelatnik);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnPromjenaDjelatnikaNaTimu, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPromjenaDjelatnikaNaTimu)
+                .addContainerGap())
+        );
+
+        jLabel3.setText("Napomena za tim:");
+
+        btnPosaljiPodatke.setText("Pošalji djelatnicima podatke");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,11 +226,16 @@ public class TimFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3)
+                    .addComponent(cbRadniNalog, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPosaljiPodatke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,13 +243,21 @@ public class TimFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbRadniNalog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnPosaljiPodatke)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,18 +265,34 @@ public class TimFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnPromjenaTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPromjenaTimActionPerformed
-        // TODO add your handling code here:
+        if (jListTim.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
+            return;
+        }
+
+        obradaTim.setEntitet(jListTim.getSelectedValue());
+        String nazivTima = JOptionPane.showInputDialog(getRootPane(), "Dali ste sigurni da želite promjeniti naziv tima: "
+        + "\n "
+        + obradaTim.getEntitet().getNazivTima());
+        obradaTim.getEntitet().setNazivTima(nazivTima.trim());
+        try {
+            obradaTim.update();
+        } catch (OrganizacijaException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        ucitajTim();
+        jListTim.repaint();
     }//GEN-LAST:event_jBtnPromjenaTimActionPerformed
 
     private void jListTimValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListTimValueChanged
-         if (evt.getValueIsAdjusting() || jListTim.getSelectedValue() == null) {
+        if (evt.getValueIsAdjusting() || jListTim.getSelectedValue() == null) {
             return;
         }
         obradaTim.setEntitet(jListTim.getSelectedValue());
         var e = obradaTim.getEntitet();
-        
+
         DefaultListModel<Djelatnik> m = new DefaultListModel<>();
-        if (e.getDjelatnik()!= null) {
+        if (e.getDjelatnik() != null) {
             Collections.sort(e.getDjelatnik(), new ViewUtil());
             m.addAll(e.getDjelatnik());
         }
@@ -180,25 +300,73 @@ public class TimFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jListTimValueChanged
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
-        if(jTxtTim.getText().trim().isEmpty()) {
+        if (jTxtTim.getText().trim().isEmpty()) {
             ucitajTim();
         } else {
             ucitajTim(jTxtTim.getText());
         }
     }//GEN-LAST:event_jBtnTraziActionPerformed
 
+    private void btnObrisiTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiTimActionPerformed
+        if (obradaTim.getEntitet() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(
+                getRootPane(),
+                "Sigurno obrisati \"" + obradaTim.getEntitet().toString() + "\"?",
+                "Brisanje",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        try {
+            obradaTim.delete();
+            ucitajTim();
+        } catch (OrganizacijaException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        jListDjelatnik.repaint();
+
+    }//GEN-LAST:event_btnObrisiTimActionPerformed
+
+    private void btnKreirajTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajTimActionPerformed
+        obradaTim.setEntitet(new Tim());
+        String naziv = JOptionPane.showInputDialog(getRootPane(), "Unesite naziv novog tima");
+        obradaTim.getEntitet().setNazivTima(naziv.trim());
+        try {
+            obradaTim.create();
+            ucitajTim();
+        } catch (OrganizacijaException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        JOptionPane.showMessageDialog(getRootPane(), "Kreiran je novi tim: " + obradaTim.getEntitet().getNazivTima());
+        jListTim.repaint();
+    }//GEN-LAST:event_btnKreirajTimActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKreirajTim;
+    private javax.swing.JButton btnObrisiTim;
+    private javax.swing.JButton btnPosaljiPodatke;
+    private javax.swing.JButton btnPromjenaDjelatnikaNaTimu;
+    private javax.swing.JComboBox<Posao> cbRadniNalog;
     private javax.swing.JButton jBtnPromjenaTim;
     private javax.swing.JButton jBtnTrazi;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<Djelatnik> jListDjelatnik;
     private javax.swing.JList<Tim> jListTim;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTxtTim;
+    private javax.swing.JTextArea txtNapomena;
     // End of variables declaration//GEN-END:variables
-
 
 }

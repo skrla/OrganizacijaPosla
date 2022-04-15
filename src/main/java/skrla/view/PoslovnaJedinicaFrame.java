@@ -431,6 +431,11 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDodajPoslovnuJedinicuActionPerformed
 
     private void btnPromjenaPodatakaPoslovneJediniceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjenaPodatakaPoslovneJediniceActionPerformed
+        if (jComboPoslovnaJedinica.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
+            return;
+        }
+
         obradaPoslovnaJedinica.setEntitet((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
         obradaPoslovnaJedinica.getEntitet().setNazivPoslovneJedinice(txtNaziv.getText().trim());
         obradaPoslovnaJedinica.getEntitet().setAdresa(txtAdresa.getText());
