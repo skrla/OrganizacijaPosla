@@ -1,3 +1,4 @@
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$4.class
 skrla\view\SplashScreen$TijekUcitanja.class
 skrla\model\Tim.class
 skrla\view\PromjenaDjelatnikFrame$4.class
@@ -22,6 +23,7 @@ skrla\view\PromjenaDjelatnikFrame$2.class
 skrla\view\TimFrame$1.class
 skrla\view\DjelatnikFrame$8.class
 skrla\view\PrikazDjelatnik.class
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$3.class
 skrla\view\PromjenaDjelatnikFrame$5.class
 skrla\controller\ObradaDjelatnik.class
 skrla\view\DjelatnikFrame$5.class
@@ -40,6 +42,7 @@ skrla\util\ViewUtil.class
 skrla\util\HibernateUtil.class
 skrla\view\DjelatnikFrame$4.class
 skrla\view\TimFrame.class
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$2.class
 skrla\view\SplashScreen.class
 skrla\view\Izbornik$2.class
 skrla\util\OrganizacijaException.class
@@ -50,6 +53,7 @@ skrla\view\Izbornik$4.class
 skrla\view\SplashScreen$Ucitanje.class
 skrla\view\PromjenaDjelatnikFrame$7.class
 skrla\view\PoslovnaJedinicaFrame$2.class
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$5.class
 skrla\controller\ObradaPoslovnaJedinica.class
 skrla\start\Start.class
 skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$1.class
