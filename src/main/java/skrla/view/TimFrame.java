@@ -188,6 +188,11 @@ public class TimFrame extends javax.swing.JFrame {
         jLabel1.setText("Djelatnici na timu:");
 
         btnPromjenaDjelatnikaNaTimu.setText("Promjeni djelatnike na timu");
+        btnPromjenaDjelatnikaNaTimu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPromjenaDjelatnikaNaTimuActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(jListDjelatnik);
 
@@ -272,8 +277,13 @@ public class TimFrame extends javax.swing.JFrame {
 
         obradaTim.setEntitet(jListTim.getSelectedValue());
         String nazivTima = JOptionPane.showInputDialog(getRootPane(), "Dali ste sigurni da želite promjeniti naziv tima: "
-        + "\n "
-        + obradaTim.getEntitet().getNazivTima());
+                + "\n "
+                + obradaTim.getEntitet().getNazivTima());
+
+        if (nazivTima == null || nazivTima.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(getRootPane(), "Niste unjeli naziv tima!");
+            return;
+        }
         obradaTim.getEntitet().setNazivTima(nazivTima.trim());
         try {
             obradaTim.update();
@@ -334,7 +344,12 @@ public class TimFrame extends javax.swing.JFrame {
     private void btnKreirajTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajTimActionPerformed
         obradaTim.setEntitet(new Tim());
         String naziv = JOptionPane.showInputDialog(getRootPane(), "Unesite naziv novog tima");
+        if (naziv == null || naziv.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(getRootPane(), "Niste unjeli naziv tima!");
+            return;
+        }
         obradaTim.getEntitet().setNazivTima(naziv.trim());
+
         try {
             obradaTim.create();
             ucitajTim();
@@ -344,6 +359,10 @@ public class TimFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(getRootPane(), "Kreiran je novi tim: " + obradaTim.getEntitet().getNazivTima());
         jListTim.repaint();
     }//GEN-LAST:event_btnKreirajTimActionPerformed
+
+    private void btnPromjenaDjelatnikaNaTimuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjenaDjelatnikaNaTimuActionPerformed
+        new PrebacijavanjeDjelatnikaSaTimaFrame().setVisible(true);
+    }//GEN-LAST:event_btnPromjenaDjelatnikaNaTimuActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

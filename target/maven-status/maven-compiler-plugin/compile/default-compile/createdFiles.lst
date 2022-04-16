@@ -30,6 +30,7 @@ skrla\view\DjelatnikFrame.class
 skrla\view\PoslovnaJedinicaFrame$6.class
 skrla\view\Izbornik$Vrijeme.class
 skrla\view\PromjenaDjelatnikFrame$6.class
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame.class
 skrla\view\Izbornik$1.class
 skrla\view\TimFrame$4.class
 skrla\view\DjelatnikFrame$7.class
@@ -51,10 +52,12 @@ skrla\view\PromjenaDjelatnikFrame$7.class
 skrla\view\PoslovnaJedinicaFrame$2.class
 skrla\controller\ObradaPoslovnaJedinica.class
 skrla\start\Start.class
+skrla\view\PrebacijavanjeDjelatnikaSaTimaFrame$1.class
 skrla\view\DjelatnikFrame$3.class
 skrla\view\PoslovnaJedinicaFrame$8.class
 skrla\view\TimFrame$3.class
 skrla\util\OibValidation.class
 skrla\view\PosaoFrame.class
+skrla\view\TimFrame$6.class
 skrla\view\PoslovnaJedinicaFrame$5.class
 skrla\view\PoslovnaJedinicaFrame.class
