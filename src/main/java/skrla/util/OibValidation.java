@@ -24,11 +24,7 @@ public class OibValidation {
 	
 	private static final int asciiDigitsOffset = '0';	
 
-        /**
-         * Provjera OIB
-         * @param oib oib koji provjeravam
-         * @return true ako je ispravan, false ako nije
-         */
+
 	public static boolean checkOIB(String oib) {
 		return checkOIBState(oib) == NO_ERROR;
 	}
@@ -67,9 +63,7 @@ public class OibValidation {
     }
         
     public static String generirajOib() {
-        // DZ
-        // Umjesto spajanja na web stranicu napraviti generiranje u java programskom jeziku
-        // https://regos.hr/app/uploads/2018/07/KONTROLA-OIB-a.pdf
+
         try {
             URL url = new URL("http://oib.itcentrala.com/oib-generator/");
             BufferedReader in = new BufferedReader(
