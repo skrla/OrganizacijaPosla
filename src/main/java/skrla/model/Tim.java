@@ -26,7 +26,6 @@ public class Tim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sifraTima;
     private String nazivTima;
-    private String napomena;
     @OneToMany(mappedBy = "tim")
     private List<Djelatnik> djelatnik;
     @OneToMany(mappedBy = "tim")

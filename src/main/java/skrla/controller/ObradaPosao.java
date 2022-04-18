@@ -19,7 +19,7 @@ public class ObradaPosao extends Obrada<Posao> {
 
     @Override
     public List<Posao> read() {
-        return session.createQuery("from Posao").list();
+        return session.createQuery("from Posao p order by p.sifraPosla desc").list();
     }
 
     @Override
@@ -39,6 +39,9 @@ public class ObradaPosao extends Obrada<Posao> {
     protected void kontrolaDelete() throws OrganizacijaException {
         if(entitet.getZavrsen()) {
             throw new OrganizacijaException("Ne možete obrisati posao koji je završen!");
+        }
+        if(entitet.getPocetakPosla().compareTo(new Date(System.currentTimeMillis())) > 0) {
+            throw new OrganizacijaException("Ne možete obrisati započeti posao!");
         }
     }
 

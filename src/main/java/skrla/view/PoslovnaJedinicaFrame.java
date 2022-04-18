@@ -33,6 +33,10 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
      */
     public PoslovnaJedinicaFrame() {
         initComponents();
+        ucitajPodatke();
+    }
+
+    private void ucitajPodatke() {
         obradaPoslovnaJedinica = new ObradaPoslovnaJedinica();
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajPoslovneJedinice();
@@ -40,7 +44,6 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         lstDjelatnik.setCellRenderer(new PrikazDjelatnik());
         ucitajDjelatnikeNaPoslovnojJedinici((PoslovnaJedinica) jComboPoslovnaJedinica.getSelectedItem());
         ucitajDjelatnikeNaPoslovnojJedinici1((PoslovnaJedinica) jComboPoslovnaJedinica1.getSelectedItem());
-
     }
 
     private void ucitajDjelatnikeNaPoslovnojJedinici(PoslovnaJedinica odabrana) {

@@ -46,7 +46,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaPrezime();
 //        kontrolaIBAN();
         kontrolaAdresa();
-//        kontrolaDatumRodenja();
+        kontrolaDatumRodenja();
         kontrolaEmail();
     }
 
@@ -102,9 +102,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         if (entitet.getDatumRodenja() == null) {
             throw new OrganizacijaException("Morate unjeti datum rođenja!");
         }
-        /*       LocalDate current = LocalDate.now();
-        Period p = Period.between(entitet.getDatumRodenja(), current);
-         */
+
     }
 
     private void kontrolaEmail() throws OrganizacijaException {

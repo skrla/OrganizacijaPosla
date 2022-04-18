@@ -8,16 +8,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.assertj.core.util.DateUtil;
 import skrla.controller.ObradaDjelatnik;
+import skrla.controller.ObradaPosao;
 import skrla.controller.ObradaTim;
 import skrla.model.Djelatnik;
 import skrla.model.Posao;
 import skrla.model.PoslovnaJedinica;
 import skrla.model.Tim;
 import skrla.util.OrganizacijaException;
+import skrla.util.SlanjeMail;
 import skrla.util.ViewUtil;
 
 /**
@@ -28,15 +31,22 @@ public class TimFrame extends javax.swing.JFrame {
 
     private ObradaTim obradaTim;
     private ObradaDjelatnik obradaDjelatnik;
+    private ObradaPosao obradaPosao;
 
     /**
      * Creates new form TimFrame
      */
     public TimFrame() {
         initComponents();
+        ucitajPodatke();
+    }
+
+    private void ucitajPodatke() {
         obradaTim = new ObradaTim();
         obradaDjelatnik = new ObradaDjelatnik();
+        obradaPosao = new ObradaPosao();
         ucitajTim();
+        ucitajPosao();
     }
 
     private void ucitajTim() {
@@ -57,6 +67,43 @@ public class TimFrame extends javax.swing.JFrame {
             m.addElement(s);
         }
         jListTim.setModel(m);
+    }
+
+    private void ucitajDjelatnike() {
+        obradaTim.setEntitet(jListTim.getSelectedValue());
+        String nazivTima = JOptionPane.showInputDialog(getRootPane(), "Dali ste sigurni da želite promjeniti naziv tima: "
+                + "\n "
+                + obradaTim.getEntitet().getNazivTima());
+
+        if (nazivTima == null || nazivTima.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(getRootPane(), "Niste unjeli naziv tima!");
+            return;
+        }
+        obradaTim.getEntitet().setNazivTima(nazivTima.trim());
+        try {
+            obradaTim.update();
+        } catch (OrganizacijaException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        ucitajTim();
+        jListTim.repaint();
+    }
+
+    private void ucitajPosao() {
+        DefaultComboBoxModel<Posao> p = new DefaultComboBoxModel<>();
+        Posao posao = new Posao();
+        posao.setSifraPosla(Integer.valueOf(0));
+        posao.setRadniNalog("Odaberite radni nalog");
+        p.addElement(posao);
+        Tim tim = (Tim) jListTim.getSelectedValue();
+        if (cbRadniNalog.getSelectedItem() != null || cbRadniNalog.getSelectedIndex() != 0) {
+            new ObradaPosao().read().forEach(s -> {
+                if (s.getTim() == tim) {
+                    p.addElement(s);
+                }
+            });
+        }
+        cbRadniNalog.setModel(p);
     }
 
     /**
@@ -220,9 +267,20 @@ public class TimFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel3.setText("Napomena za tim:");
+        cbRadniNalog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRadniNalogActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Napomena za posao:");
 
         btnPosaljiPodatke.setText("Pošalji djelatnicima podatke");
+        btnPosaljiPodatke.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPosaljiPodatkeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,12 +292,13 @@ public class TimFrame extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3)
-                    .addComponent(cbRadniNalog, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPosaljiPodatke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane3)
+                        .addComponent(cbRadniNalog, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPosaljiPodatke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -257,10 +316,10 @@ public class TimFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cbRadniNalog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
                         .addComponent(btnPosaljiPodatke)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -275,23 +334,7 @@ public class TimFrame extends javax.swing.JFrame {
             return;
         }
 
-        obradaTim.setEntitet(jListTim.getSelectedValue());
-        String nazivTima = JOptionPane.showInputDialog(getRootPane(), "Dali ste sigurni da želite promjeniti naziv tima: "
-                + "\n "
-                + obradaTim.getEntitet().getNazivTima());
-
-        if (nazivTima == null || nazivTima.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(getRootPane(), "Niste unjeli naziv tima!");
-            return;
-        }
-        obradaTim.getEntitet().setNazivTima(nazivTima.trim());
-        try {
-            obradaTim.update();
-        } catch (OrganizacijaException ex) {
-            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
-        }
-        ucitajTim();
-        jListTim.repaint();
+        ucitajDjelatnike();
     }//GEN-LAST:event_jBtnPromjenaTimActionPerformed
 
     private void jListTimValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListTimValueChanged
@@ -307,6 +350,7 @@ public class TimFrame extends javax.swing.JFrame {
             m.addAll(e.getDjelatnik());
         }
         jListDjelatnik.setModel(m);
+        ucitajPosao();
     }//GEN-LAST:event_jListTimValueChanged
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
@@ -324,7 +368,7 @@ public class TimFrame extends javax.swing.JFrame {
         }
         if (JOptionPane.showConfirmDialog(
                 getRootPane(),
-                "Sigurno obrisati \"" + obradaTim.getEntitet().toString() + "\"?",
+                "Sigurno obrisati: " + obradaTim.getEntitet().toString() + "?",
                 "Brisanje",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
@@ -363,6 +407,30 @@ public class TimFrame extends javax.swing.JFrame {
     private void btnPromjenaDjelatnikaNaTimuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjenaDjelatnikaNaTimuActionPerformed
         new PrebacijavanjeDjelatnikaSaTimaFrame().setVisible(true);
     }//GEN-LAST:event_btnPromjenaDjelatnikaNaTimuActionPerformed
+
+    private void cbRadniNalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRadniNalogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbRadniNalogActionPerformed
+
+    private void btnPosaljiPodatkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPosaljiPodatkeActionPerformed
+        Posao posao = (Posao) cbRadniNalog.getSelectedItem();
+        if (posao == null || cbRadniNalog.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite radni nalog");
+            return;
+        } else if (jListTim.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite tim");
+            return;
+        }
+
+        obradaPosao.setEntitet(posao);
+        obradaPosao.getEntitet().setNapomena(txtNapomena.getText());
+        try {
+            obradaPosao.update();
+        } catch (OrganizacijaException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        new SlanjeMail(posao, (List<Djelatnik>) jListTim.getSelectedValue().getDjelatnik());
+    }//GEN-LAST:event_btnPosaljiPodatkeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

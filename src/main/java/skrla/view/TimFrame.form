@@ -29,12 +29,14 @@
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel2" min="-2" pref="82" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" max="32767" attributes="0"/>
-                  <Component id="cbRadniNalog" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jLabel3" min="-2" pref="108" max="-2" attributes="0"/>
-                  <Component id="btnPosaljiPodatke" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel2" min="-2" pref="82" max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="cbRadniNalog" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnPosaljiPodatke" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jLabel3" min="-2" pref="133" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="77" max="32767" attributes="0"/>
           </Group>
@@ -57,10 +59,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="cbRadniNalog" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="97" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="134" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="btnPosaljiPodatke" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -293,19 +295,25 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbRadniNalogActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Posao&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Napomena za tim:"/>
+        <Property name="text" type="java.lang.String" value="Napomena za posao:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnPosaljiPodatke">
       <Properties>
         <Property name="text" type="java.lang.String" value="Po&#x161;alji djelatnicima podatke"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPosaljiPodatkeActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

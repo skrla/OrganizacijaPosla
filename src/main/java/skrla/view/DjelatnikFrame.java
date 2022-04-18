@@ -31,6 +31,10 @@ public class DjelatnikFrame extends javax.swing.JFrame {
      */
     public DjelatnikFrame() {
         initComponents();
+        ucitajPodatke();
+    }
+
+    private void ucitajPodatke() {
         obradaDjelatnik = new ObradaDjelatnik();
         lstDjelatnik.setCellRenderer(new PrikazDjelatnik());
         ucitajDjelatnike();
@@ -305,7 +309,7 @@ public class DjelatnikFrame extends javax.swing.JFrame {
         }
         if (JOptionPane.showConfirmDialog(
                 getRootPane(),
-                "Sigurno obrisati \"" + obradaDjelatnik.getEntitet().toString() + "\"?",
+                "Sigurno obrisati: " + obradaDjelatnik.getEntitet().toString() + "?",
                 "Brisanje",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {

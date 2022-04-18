@@ -25,7 +25,8 @@ public class Izbornik extends javax.swing.JFrame {
     }
     
     private void postaviIzgled() {
-        df = new SimpleDateFormat("dd. MMMM. yyy. HH:mm:ss");
+        df = new SimpleDateFormat("dd. MM. yyy. HH:mm:ss");
+        
         Vrijeme v = new Vrijeme();
         v.start();
     }

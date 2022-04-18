@@ -31,6 +31,10 @@ public class PrebacijavanjeDjelatnikaSaTimaFrame extends javax.swing.JFrame {
      */
     public PrebacijavanjeDjelatnikaSaTimaFrame() {
         initComponents();
+        ucitajPodatke();
+    }
+
+    private void ucitajPodatke() {
         obradaTim = new ObradaTim();
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajTim();
