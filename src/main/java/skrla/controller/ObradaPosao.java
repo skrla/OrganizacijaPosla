@@ -21,6 +21,14 @@ public class ObradaPosao extends Obrada<Posao> {
     public List<Posao> read() {
         return session.createQuery("from Posao p order by p.sifraPosla desc").list();
     }
+    
+    public List<Posao> traziPoRadnomNalogu(String radniNalog) {
+        return session.createQuery("from Posao p"
+                + " where p.radniNalog like :radniNalog"
+                + " order by p.sifraPosla desc")
+                .setParameter("radniNalog", "%" + radniNalog + "%")
+                .list();
+    }
 
     @Override
     protected void kontrolaCreate() throws OrganizacijaException {

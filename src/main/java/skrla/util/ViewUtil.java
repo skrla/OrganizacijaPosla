@@ -4,27 +4,24 @@
  */
 package skrla.util;
 
-import java.text.Collator;
-import java.util.Comparator;
-import java.util.Locale;
-import skrla.model.Djelatnik;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import us.codecraft.xsoup.Xsoup;
 
 /**
  *
  * @author skrla
  */
-public class ViewUtil implements Comparator<Djelatnik> {
-
-    private Collator hr;
-
-    public ViewUtil() {
-        hr = Collator.getInstance(new Locale("hr", "HR")); //Your locale here
-        hr.setStrength(Collator.PRIMARY);
-    }
-
-    @Override
-    public int compare(Djelatnik o1, Djelatnik o2) {
-        return hr.compare(o1.getPrezime(), o2.getPrezime());
-    }
+public class ViewUtil {
     
+    public static final String NAZIV ="Organizacija posla";
+    
+    public static String getNaslov(String naslov){
+
+        return ViewUtil.NAZIV + " - " + naslov;
+    }
+
 }

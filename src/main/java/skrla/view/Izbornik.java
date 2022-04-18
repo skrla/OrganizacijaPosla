@@ -4,8 +4,24 @@
  */
 package skrla.view;
 
+import java.awt.BorderLayout;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DatasetChangeListener;
+import org.jfree.data.general.DatasetGroup;
+import org.jfree.data.general.DefaultPieDataset;
+import skrla.controller.ObradaTim;
+import skrla.model.Posao;
+import skrla.model.Tim;
+import skrla.util.ViewUtil;
 
 /**
  *
@@ -16,22 +32,47 @@ public class Izbornik extends javax.swing.JFrame {
     /**
      * Creates new form Izbornik
      */
-    
     private SimpleDateFormat df;
-    
+    private List<Tim> timovi;
+
     public Izbornik() {
         initComponents();
-        postaviIzgled();
+        postavke();
     }
-    
+
+    private void postavke() {
+        setTitle(ViewUtil.getNaslov("Izbornik"));
+        ObradaTim obradaTim = new ObradaTim();
+        timovi = obradaTim.read();
+        postaviIzgled();
+        definirajPie();
+    }
+
+    private void definirajPie() {
+
+        DefaultPieDataset dataset = new DefaultPieDataset();
+
+        for (Tim t : timovi) {
+            var broj = t.getPosao() == null ? 0 : t.getPosao().size();
+            dataset.setValue(t.getNazivTima() + " (" + broj + ")", broj);
+        }
+        var jFreeChart = ChartFactory.createPieChart("Broj poslova po timu", dataset);
+
+        ChartPanel chartPanel = new ChartPanel(jFreeChart);
+
+        pnlPie.setLayout(new BorderLayout());
+        pnlPie.add(chartPanel, BorderLayout.CENTER);
+        pnlPie.validate();
+    }
+
     private void postaviIzgled() {
         df = new SimpleDateFormat("dd. MM. yyy. HH:mm:ss");
-        
+
         Vrijeme v = new Vrijeme();
         v.start();
     }
-    
-        private class Vrijeme extends Thread{
+
+    private class Vrijeme extends Thread {
 
         @Override
         public void run() {
@@ -42,7 +83,7 @@ public class Izbornik extends javax.swing.JFrame {
             }
             run();
         }
-        
+
     }
 
     /**
@@ -54,7 +95,9 @@ public class Izbornik extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jVrijeme = new javax.swing.JLabel();
+        pnlPie = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         miExit = new javax.swing.JMenuItem();
@@ -64,9 +107,37 @@ public class Izbornik extends javax.swing.JFrame {
         jMenuTim = new javax.swing.JMenuItem();
         jMenuPosao = new javax.swing.JMenuItem();
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jVrijeme.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        pnlPie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlPieMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlPieLayout = new javax.swing.GroupLayout(pnlPie);
+        pnlPie.setLayout(pnlPieLayout);
+        pnlPieLayout.setHorizontalGroup(
+            pnlPieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlPieLayout.setVerticalGroup(
+            pnlPieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 539, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("Organizacija Posla");
 
@@ -127,12 +198,16 @@ public class Izbornik extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jVrijeme, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jVrijeme, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(pnlPie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlPie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jVrijeme, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -160,6 +235,10 @@ public class Izbornik extends javax.swing.JFrame {
         new PosaoFrame().setVisible(true);
     }//GEN-LAST:event_jMenuPosaoActionPerformed
 
+    private void pnlPieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlPieMouseClicked
+
+    }//GEN-LAST:event_pnlPieMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -169,9 +248,11 @@ public class Izbornik extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuPosao;
     private javax.swing.JMenuItem jMenuPoslovnaJedinica;
     private javax.swing.JMenuItem jMenuTim;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jVrijeme;
     private javax.swing.JMenuItem miExit;
+    private javax.swing.JPanel pnlPie;
+    private javax.swing.JPanel pnlPie1;
     // End of variables declaration//GEN-END:variables
-
 
 }

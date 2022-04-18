@@ -15,6 +15,7 @@ import skrla.controller.ObradaTim;
 import skrla.model.Djelatnik;
 import skrla.model.Tim;
 import skrla.util.OrganizacijaException;
+import skrla.util.ComparatorOrganizacija;
 import skrla.util.ViewUtil;
 
 /**
@@ -35,6 +36,7 @@ public class PrebacijavanjeDjelatnikaSaTimaFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
+                setTitle(ViewUtil.getNaslov("Određivanje tima"));
         obradaTim = new ObradaTim();
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajTim();

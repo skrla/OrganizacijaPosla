@@ -21,6 +21,7 @@ import skrla.model.PoslovnaJedinica;
 import skrla.model.Tim;
 import skrla.util.OrganizacijaException;
 import skrla.util.SlanjeMail;
+import skrla.util.ComparatorOrganizacija;
 import skrla.util.ViewUtil;
 
 /**
@@ -42,6 +43,7 @@ public class TimFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
+        setTitle(ViewUtil.getNaslov("Tim"));
         obradaTim = new ObradaTim();
         obradaDjelatnik = new ObradaDjelatnik();
         obradaPosao = new ObradaPosao();
@@ -346,7 +348,7 @@ public class TimFrame extends javax.swing.JFrame {
 
         DefaultListModel<Djelatnik> m = new DefaultListModel<>();
         if (e.getDjelatnik() != null) {
-            Collections.sort(e.getDjelatnik(), new ViewUtil());
+            Collections.sort(e.getDjelatnik(), new ComparatorOrganizacija());
             m.addAll(e.getDjelatnik());
         }
         jListDjelatnik.setModel(m);
@@ -429,7 +431,15 @@ public class TimFrame extends javax.swing.JFrame {
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
-        new SlanjeMail(posao, (List<Djelatnik>) jListTim.getSelectedValue().getDjelatnik());
+        String[] options = new String[2];
+        options[0] = "Pošalji";
+        options[1] = "Nemoj poslati";
+
+        int i = JOptionPane.showOptionDialog(getRootPane(), "Poslati svim djelatnicima promjenu detalja o poslu?", "Pošalji mail!", 0,
+                JOptionPane.INFORMATION_MESSAGE, null, options, null);
+        if (i == 0) {
+            new SlanjeMail(posao, (List<Djelatnik>) jListTim.getSelectedValue().getDjelatnik());
+        }
     }//GEN-LAST:event_btnPosaljiPodatkeActionPerformed
 
 

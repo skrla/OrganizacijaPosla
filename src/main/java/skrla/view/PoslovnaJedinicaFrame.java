@@ -17,6 +17,7 @@ import skrla.controller.ObradaTim;
 import skrla.model.Djelatnik;
 import skrla.model.PoslovnaJedinica;
 import skrla.util.OrganizacijaException;
+import skrla.util.ComparatorOrganizacija;
 import skrla.util.ViewUtil;
 
 /**
@@ -37,6 +38,7 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
+        setTitle(ViewUtil.getNaslov("Poslovne jedinice"));
         obradaPoslovnaJedinica = new ObradaPoslovnaJedinica();
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajPoslovneJedinice();
@@ -51,7 +53,7 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         List<Djelatnik> djelatniciNaPoslovnojJednici;
         djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
 
-        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+        Collections.sort(djelatniciNaPoslovnojJednici, new ComparatorOrganizacija());
 
         if (jComboPoslovnaJedinica.getSelectedIndex() != 0) {
             for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {
@@ -74,7 +76,7 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         List<Djelatnik> djelatniciNaPoslovnojJednici;
         djelatniciNaPoslovnojJednici = obradaDjelatnik.read();
 
-        Collections.sort(djelatniciNaPoslovnojJednici, new ViewUtil());
+        Collections.sort(djelatniciNaPoslovnojJednici, new ComparatorOrganizacija());
 
         if (jComboPoslovnaJedinica1.getSelectedIndex() != 0) {
             for (Djelatnik djelatnik : djelatniciNaPoslovnojJednici) {

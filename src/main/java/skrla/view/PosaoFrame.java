@@ -29,9 +29,11 @@ import skrla.controller.ObradaTim;
 import skrla.model.Posao;
 import skrla.model.Tim;
 import skrla.util.TablicaPosaoModel;
-import skrla.util.ViewUtil;
+import skrla.util.ComparatorOrganizacija;
 import skrla.model.Djelatnik;
 import skrla.util.OrganizacijaException;
+import skrla.util.SlanjeMail;
+import skrla.util.ViewUtil;
 
 /**
  *
@@ -54,6 +56,7 @@ public class PosaoFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
+        setTitle(ViewUtil.getNaslov("Poslovi"));
         obradaPosao = new ObradaPosao();
         obradaTim = new ObradaTim();
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr", "HR"));
@@ -77,6 +80,12 @@ public class PosaoFrame extends javax.swing.JFrame {
         m = new TablicaPosaoModel(poslovi);
         lstPosao.setModel(m);
 
+    }
+
+    private void ucitajPosao(String radniNalog) {
+        poslovi = obradaPosao.traziPoRadnomNalogu(radniNalog);
+        m = new TablicaPosaoModel(poslovi);
+        lstPosao.setModel(m);
     }
 
     private void postaviPosao(Posao posao) {
@@ -110,6 +119,14 @@ public class PosaoFrame extends javax.swing.JFrame {
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
+        String[] options = new String[2];
+        options[0] = "Pošalji";
+        options[1] = "Nemoj poslati";
+        int i = JOptionPane.showOptionDialog(getRootPane(), "Poslati svim djelatnicima promjenu detalja o poslu?", "Pošalji mail!", 0,
+                JOptionPane.INFORMATION_MESSAGE, null, options, null);
+        if (i == 0) {
+            new SlanjeMail(obradaPosao.getEntitet(), ((List<Djelatnik>) ((Tim) cbTim.getSelectedItem()).getDjelatnik()));
+        }
     }
 
     private void stvaranjePosla() {
@@ -121,6 +138,15 @@ public class PosaoFrame extends javax.swing.JFrame {
             obradaPosao.create();
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
+        }
+        String[] options = new String[2];
+        options[0] = "Pošalji";
+        options[1] = "Nemoj poslati";
+        int i = JOptionPane.showOptionDialog(getRootPane(), "Poslati svim djelatnicima obavjest o novom poslu?", "Pošalji mail!", 0,
+                JOptionPane.INFORMATION_MESSAGE, null, options, null);
+        if (i == 0) {
+            new SlanjeMail(obradaPosao.getEntitet(), ((List<Djelatnik>) ((Tim) cbTim.getSelectedItem()).getDjelatnik()));
+
         }
     }
 
@@ -171,6 +197,9 @@ public class PosaoFrame extends javax.swing.JFrame {
         btnKreiraj = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
         btnPromejna = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtRadniNalog = new javax.swing.JTextField();
+        btnTrazi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -229,6 +258,24 @@ public class PosaoFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Traži po radnom nalogu:");
+
+        txtRadniNalog.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtRadniNalog.setToolTipText("");
+        txtRadniNalog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRadniNalogActionPerformed(evt);
+            }
+        });
+
+        btnTrazi.setText("Traži");
+        btnTrazi.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnTrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraziActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -236,22 +283,44 @@ public class PosaoFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnKreiraj, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnPromejna, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtRadniNalog))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnKreiraj, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnPromejna, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTrazi)
+                        .addGap(60, 60, 60))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRadniNalog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnTrazi)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnKreiraj)
@@ -354,7 +423,7 @@ public class PosaoFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbTim, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,8 +502,22 @@ public class PosaoFrame extends javax.swing.JFrame {
 
     private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
         stvaranjePosla();
+
         ucitajPosao();
+
     }//GEN-LAST:event_btnKreirajActionPerformed
+
+    private void txtRadniNalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRadniNalogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRadniNalogActionPerformed
+
+    private void btnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraziActionPerformed
+        if (txtRadniNalog.getText().trim().isEmpty()) {
+            ucitajPosao();
+        } else {
+            ucitajPosao(txtRadniNalog.getText());
+        }
+    }//GEN-LAST:event_btnTraziActionPerformed
 
     private LocalDate dateToLocal(Date date) {
         if (date != null) {
@@ -461,6 +544,7 @@ public class PosaoFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnKreiraj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromejna;
+    private javax.swing.JButton btnTrazi;
     private javax.swing.JComboBox<Tim> cbTim;
     private com.github.lgooddatepicker.components.DatePicker dpDatumPocetka;
     private com.github.lgooddatepicker.components.DatePicker dpDatumZavrsetka;
@@ -471,6 +555,7 @@ public class PosaoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -482,6 +567,7 @@ public class PosaoFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtCijenaPosla;
     private javax.swing.JTextArea txtNapomena;
     private javax.swing.JTextArea txtOpisPosla;
+    private javax.swing.JTextField txtRadniNalog;
     // End of variables declaration//GEN-END:variables
 
 }

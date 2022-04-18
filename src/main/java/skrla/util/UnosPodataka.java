@@ -46,7 +46,7 @@ public class UnosPodataka {
         List<Djelatnik> djelatnici = new ArrayList();
         Djelatnik d;
         for (int i = 0; i < 124; i++) {
-            int m = (int) (Math.random() * (30 - 0) + 30) % 30;
+            int m = (int) (Math.random() * (10 - 0) + 10) % 10;
             d = new Djelatnik();
             d.setIme(faker.name().firstName());
             d.setPrezime(faker.name().lastName());
@@ -72,7 +72,7 @@ public class UnosPodataka {
         List<Tim> tim = new ArrayList();
         Tim t;
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             t = new Tim();
             t.setNazivTima(faker.dog().breed());
             session.save(t);
@@ -99,9 +99,9 @@ public class UnosPodataka {
     private static List<Posao> generirajPoslove(Faker faker, Session session, List<Tim> t) {
         List<Posao> poslovi = new ArrayList();
         Posao p;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 300; i++) {
             p = new Posao();
-            int m = (int) (Math.random() * (30 - 0) + 30) % 30;
+            int m = (int) (Math.random() * (10 - 0) + 10) % 10;
             p.setOpisPosla(faker.chuckNorris().fact());
             p.setCijenaPosla(new BigDecimal(Math.random() * (100000 - 5000) + 5000));
             p.setTim(t.get(m));

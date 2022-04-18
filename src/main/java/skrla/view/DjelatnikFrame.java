@@ -16,6 +16,7 @@ import skrla.model.Djelatnik;
 import skrla.model.PoslovnaJedinica;
 import skrla.model.Tim;
 import skrla.util.OrganizacijaException;
+import skrla.util.ComparatorOrganizacija;
 import skrla.util.ViewUtil;
 
 /**
@@ -35,6 +36,7 @@ public class DjelatnikFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
+        setTitle(ViewUtil.getNaslov("Djelatnik"));
         obradaDjelatnik = new ObradaDjelatnik();
         lstDjelatnik.setCellRenderer(new PrikazDjelatnik());
         ucitajDjelatnike();
@@ -71,7 +73,7 @@ public class DjelatnikFrame extends javax.swing.JFrame {
         List<Djelatnik> entiteti;
         entiteti = obradaDjelatnik.read(jTxtDjelatnik.getText().trim());
 
-        Collections.sort(entiteti, new ViewUtil());
+        Collections.sort(entiteti, new ComparatorOrganizacija());
 
         for (Djelatnik s : entiteti) {
             m.addElement(s);

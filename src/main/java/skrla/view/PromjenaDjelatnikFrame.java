@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import skrla.controller.ObradaDjelatnik;
 import skrla.model.Djelatnik;
 import skrla.util.OrganizacijaException;
+import skrla.util.ViewUtil;
 
 /**
  *
@@ -26,6 +27,7 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
      */
     public PromjenaDjelatnikFrame() {
         initComponents();
+        setTitle(ViewUtil.getNaslov("Promjena podataka o djelatniku"));
         kreiratiNovog = true;
         djelatnik = new Djelatnik();
         obradaDjelatnik = new ObradaDjelatnik();
@@ -34,6 +36,7 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
 
     public PromjenaDjelatnikFrame(Djelatnik djelatnik) {
         initComponents();
+        setTitle(ViewUtil.getNaslov("Promjena podataka o djelatniku"));
         kreiratiNovog = false;
         this.djelatnik = djelatnik;
         obradaDjelatnik = new ObradaDjelatnik();
