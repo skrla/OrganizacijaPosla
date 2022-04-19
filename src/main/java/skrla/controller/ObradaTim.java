@@ -60,7 +60,7 @@ public class ObradaTim extends Obrada<Tim>{
                     sb.append("/n");
                 }
             }
-            if(sb.isEmpty()) {
+            if(sb.length() > 0) {
                 throw new OrganizacijaException("Ne možete obrisati tim dok ne završi poslove:" + sb.toString());
             }
         }
