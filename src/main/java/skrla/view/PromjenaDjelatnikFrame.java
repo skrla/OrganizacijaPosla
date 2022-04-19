@@ -4,6 +4,7 @@
  */
 package skrla.view;
 
+import java.awt.event.KeyEvent;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -117,39 +118,69 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Ime:");
 
+        txtIme.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtIme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtImeActionPerformed(evt);
             }
         });
+        txtIme.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtImeKeyPressed(evt);
+            }
+        });
 
+        txtPrezime.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtPrezime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrezimeActionPerformed(evt);
             }
         });
+        txtPrezime.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPrezimeKeyPressed(evt);
+            }
+        });
 
         jLabel2.setText("Prezime:");
 
+        txtEmail.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
             }
         });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEmailKeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("Email:");
 
+        txtOIB.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtOIB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtOIBActionPerformed(evt);
             }
         });
+        txtOIB.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtOIBKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("OIB:");
 
+        txtAdresa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtAdresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAdresaActionPerformed(evt);
+            }
+        });
+        txtAdresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtAdresaKeyPressed(evt);
             }
         });
 
@@ -157,6 +188,7 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Datum rođenja:");
 
+        txtIban.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtIban.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIbanActionPerformed(evt);
@@ -273,6 +305,51 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Uspiješno spremljeni podaci");
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtImeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImeKeyPressed
+        if (txtIme.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtPrezime.requestFocus();
+        }
+    }//GEN-LAST:event_txtImeKeyPressed
+
+    private void txtPrezimeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrezimeKeyPressed
+        if (txtPrezime.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtEmail.requestFocus();
+        }
+    }//GEN-LAST:event_txtPrezimeKeyPressed
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+        if (txtEmail.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtOIB.requestFocus();
+        }
+    }//GEN-LAST:event_txtEmailKeyPressed
+
+    private void txtOIBKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOIBKeyPressed
+        if (txtOIB.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtAdresa.requestFocus();
+        }
+    }//GEN-LAST:event_txtOIBKeyPressed
+
+    private void txtAdresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdresaKeyPressed
+        if (txtAdresa.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtIban.requestFocus();
+        }
+    }//GEN-LAST:event_txtAdresaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.hibernate.Session;
+import org.iban4j.CountryCode;
+import org.iban4j.Iban;
 import skrla.model.Djelatnik;
 import skrla.model.Posao;
 import skrla.model.PoslovnaJedinica;
@@ -60,6 +62,7 @@ public class UnosPodataka {
             d.setAdresaStanovanja(faker.pokemon().location());
             d.setPoslovnaJedinica(pj.get((int) (Math.random() * (5 - 0) + 5) % 5));
             d.setTim(t.get(m));
+            d.setIBAN(Iban.random(CountryCode.HR).toString());
             d.setAktivan(true);
             session.save(d);
             djelatnici.add(d);

@@ -4,6 +4,7 @@
  */
 package skrla.view;
 
+import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -150,11 +151,13 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jListDjelatnik = new javax.swing.JScrollPane();
         lstDjelatnik = new javax.swing.JList<>();
+        jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jComboPoslovnaJedinica1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jListDjelatnik1 = new javax.swing.JScrollPane();
         lstDjelatnik1 = new javax.swing.JList<>();
+        jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         btnDodajPoslovnuJedinicu = new javax.swing.JButton();
@@ -179,6 +182,8 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
 
         jListDjelatnik.setViewportView(lstDjelatnik);
 
+        jLabel7.setText("Djelatnici na poslovnoj jedinici:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -188,9 +193,12 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jListDjelatnik)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -201,8 +209,10 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboPoslovnaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jListDjelatnik, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jListDjelatnik, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -216,6 +226,8 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
 
         jListDjelatnik1.setViewportView(lstDjelatnik1);
 
+        jLabel8.setText("Djelatnici na poslovnoj jedinici:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -225,9 +237,12 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jListDjelatnik1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboPoslovnaJedinica1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboPoslovnaJedinica1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -238,8 +253,10 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboPoslovnaJedinica1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jListDjelatnik1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jListDjelatnik1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel6.setText("Adresa poslovne jedinice:");
@@ -276,6 +293,11 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         txtNaziv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNazivActionPerformed(evt);
+            }
+        });
+        txtNaziv.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNazivKeyPressed(evt);
             }
         });
 
@@ -461,6 +483,15 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAdresaActionPerformed
 
+    private void txtNazivKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNazivKeyPressed
+        if (txtNaziv.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtAdresa.requestFocus();
+        }
+    }//GEN-LAST:event_txtNazivKeyPressed
+
     private void spremi() {
         try {
             obradaDjelatnik.update();
@@ -483,6 +514,8 @@ public class PoslovnaJedinicaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jListDjelatnik;
     private javax.swing.JScrollPane jListDjelatnik1;
     private javax.swing.JPanel jPanel1;

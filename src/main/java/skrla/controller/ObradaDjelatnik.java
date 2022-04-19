@@ -44,7 +44,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaOib();
         kontrolaIme();
         kontrolaPrezime();
-//        kontrolaIBAN();
+        kontrolaIBAN();
         kontrolaAdresa();
         kontrolaDatumRodenja();
         kontrolaEmail();

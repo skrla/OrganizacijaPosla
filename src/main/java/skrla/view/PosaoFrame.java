@@ -6,6 +6,7 @@ package skrla.view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -340,6 +341,11 @@ public class PosaoFrame extends javax.swing.JFrame {
         txtOpisPosla.setLineWrap(true);
         txtOpisPosla.setRows(5);
         txtOpisPosla.setWrapStyleWord(true);
+        txtOpisPosla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtOpisPoslaKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtOpisPosla);
 
         jLabel6.setText("Napomena za posao:");
@@ -348,7 +354,21 @@ public class PosaoFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Datum završetka posla:");
 
+        dpDatumZavrsetka.setNextFocusableComponent(txtCijenaPosla);
+
         txtCijenaPosla.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtCijenaPosla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCijenaPoslaActionPerformed(evt);
+            }
+        });
+        txtCijenaPosla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCijenaPoslaKeyPressed(evt);
+            }
+        });
+
+        dpDatumPocetka.setNextFocusableComponent(dpDatumZavrsetka);
 
         jLabel2.setText("Datum početka posla:");
 
@@ -518,6 +538,28 @@ public class PosaoFrame extends javax.swing.JFrame {
             ucitajPosao(txtRadniNalog.getText());
         }
     }//GEN-LAST:event_btnTraziActionPerformed
+
+    private void txtCijenaPoslaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCijenaPoslaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCijenaPoslaActionPerformed
+
+    private void txtCijenaPoslaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCijenaPoslaKeyPressed
+                if (txtCijenaPosla.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtOpisPosla.requestFocus();
+        }
+    }//GEN-LAST:event_txtCijenaPoslaKeyPressed
+
+    private void txtOpisPoslaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOpisPoslaKeyPressed
+                if (txtOpisPosla.getText().trim().isEmpty()) {
+            return;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtNapomena.requestFocus();
+        }
+    }//GEN-LAST:event_txtOpisPoslaKeyPressed
 
     private LocalDate dateToLocal(Date date) {
         if (date != null) {
