@@ -61,6 +61,8 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
         postaviPodatke(obradaDjelatnik.getEntitet());
         try {
             obradaDjelatnik.update();
+            JOptionPane.showMessageDialog(rootPane, "Uspiješno spremljeni podaci");
+            dispose();
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
@@ -71,6 +73,8 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
             obradaDjelatnik.getEntitet().setAktivan(true);
             postaviPodatke(obradaDjelatnik.getEntitet());
             obradaDjelatnik.create();
+            JOptionPane.showMessageDialog(rootPane, "Uspiješno spremljeni podaci");
+            dispose();
         } catch (OrganizacijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
@@ -302,8 +306,7 @@ public class PromjenaDjelatnikFrame extends javax.swing.JFrame {
         } else {
             promjeniPodatkeDjelatnika();
         }
-        JOptionPane.showMessageDialog(rootPane, "Uspiješno spremljeni podaci");
-        dispose();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtImeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImeKeyPressed
