@@ -36,7 +36,7 @@ public class PrebacijavanjeDjelatnikaSaTimaFrame extends javax.swing.JFrame {
     }
 
     private void ucitajPodatke() {
-                setTitle(ViewUtil.getNaslov("Određivanje tima"));
+        setTitle(ViewUtil.getNaslov("Određivanje tima"));
         obradaTim = new ObradaTim();
         obradaDjelatnik = new ObradaDjelatnik();
         ucitajTim();
@@ -90,14 +90,21 @@ public class PrebacijavanjeDjelatnikaSaTimaFrame extends javax.swing.JFrame {
 
     private void ucitajDjelatnikeNaTimu(Tim odabran) {
         DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatnici;
+        djelatnici = obradaDjelatnik.read();
         Tim tim = odabran;
 
         if (cbTim.getSelectedIndex() != 0) {
-            for (Djelatnik d : tim.getDjelatnik()) {
-                m.addElement(d);
+            for (Djelatnik d : djelatnici) {
+                if (d.getTim() == null) {
+                    continue;
+                }
+                if (d.getTim().getSifraTima() == odabran.getSifraTima()) {
+                    m.addElement(d);
+                }
             }
         } else {
-            for (Djelatnik d : obradaDjelatnik.read()) {
+            for (Djelatnik d : djelatnici) {
                 if (d.getTim() == null) {
                     m.addElement(d);
                 }
@@ -108,13 +115,20 @@ public class PrebacijavanjeDjelatnikaSaTimaFrame extends javax.swing.JFrame {
 
     private void ucitajDjelatnikeNaTimu1(Tim odabran) {
         DefaultListModel<Djelatnik> m = new DefaultListModel<>();
+        List<Djelatnik> djelatnici;
+        djelatnici = obradaDjelatnik.read();
         Tim tim = odabran;
         if (cbTim1.getSelectedIndex() != 0) {
-            for (Djelatnik d : tim.getDjelatnik()) {
-                m.addElement(d);
+            for (Djelatnik d : djelatnici) {
+                if (d.getTim() == null) {
+                    continue;
+                }
+                if (d.getTim().getSifraTima() == odabran.getSifraTima()) {
+                    m.addElement(d);
+                }
             }
         } else {
-            for (Djelatnik d : obradaDjelatnik.read()) {
+            for (Djelatnik d : djelatnici) {
                 if (d.getTim() == null) {
                     m.addElement(d);
                 }
