@@ -42,8 +42,6 @@ public class Izbornik extends javax.swing.JFrame {
 
     private void postavke() {
         setTitle(ViewUtil.getNaslov("Izbornik"));
-        ObradaTim obradaTim = new ObradaTim();
-        timovi = obradaTim.read();
         postaviIzgled();
         definirajPie();
     }
@@ -52,6 +50,8 @@ public class Izbornik extends javax.swing.JFrame {
 
         DefaultPieDataset dataset = new DefaultPieDataset();
 
+        ObradaTim obradaTim = new ObradaTim();
+        timovi = obradaTim.read();
         for (Tim t : timovi) {
             var broj = t.getPosao() == null ? 0 : t.getPosao().size();
             dataset.setValue(t.getNazivTima() + " (" + broj + ")", broj);

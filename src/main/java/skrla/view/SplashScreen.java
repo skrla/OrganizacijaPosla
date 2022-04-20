@@ -68,7 +68,7 @@ public class SplashScreen extends javax.swing.JFrame {
                 for (int t = i; t < 100; t++) {
                     try {
                         pbUcitanje.setValue(++i);
-                        Thread.sleep(3);
+                        Thread.sleep(6);
                     } catch (InterruptedException ex) {
                        
                     }
